@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datacquity — The Pharma Commercial AI-Powered OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0A0A; --g1:#2B2B2B; --g2:#5C5C5C; --g3:#8C8C8C; --g4:#B8B8B8;
+    --g5:#E6E6E6; --gbg:#F4F4F4; --white:#FFFFFF;
+    --max:1180px;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Poppins',sans-serif;font-weight:300;color:var(--g1);
+    background:var(--white);line-height:1.5;-webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 40px}
+  h1,h2,h3{font-weight:300;letter-spacing:-0.01em;line-height:1.08}
+  .med{font-weight:500}
+  .reg{font-weight:400}
+  .kicker{font-weight:400;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--g3)}
+
+  /* ---- NAV ---- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.86);
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--g5);transition:transform .4s var(--ease)}
+  nav.hide{transform:translateY(-100%)}
+  .navin{max-width:var(--max);margin:0 auto;padding:18px 40px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-weight:500;font-size:1.18rem;letter-spacing:-0.02em;color:var(--ink)}
+  .logo span{color:var(--g4)}
+  .logo .ja{color:var(--g3);margin:0 -0.03em;position:relative}
+  .navlinks{display:flex;align-items:center;gap:34px}
+  .navlinks a{color:var(--g2);text-decoration:none;font-size:.86rem;font-weight:400;transition:color .25s}
+  .navlinks a:hover{color:var(--ink)}
+  .btn{display:inline-block;background:var(--ink);color:var(--white);padding:12px 22px;
+    font-size:.82rem;font-weight:400;letter-spacing:.02em;text-decoration:none;border:1px solid var(--ink);
+    transition:all .3s var(--ease);cursor:pointer}
+  .btn:hover{background:transparent;color:var(--ink)}
+  .btn-ghost{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.4)}
+  .btn-ghost:hover{background:var(--white);color:var(--ink);border-color:var(--white)}
+  .nav-cta{padding:10px 18px;background:transparent;color:var(--ink);border:1px solid var(--g4)}
+  .nav-cta:hover{background:var(--ink);color:var(--white)!important;border-color:var(--ink)}
+  @media(max-width:760px){.navlinks a:not(.nav-cta){display:none}}
+
+  /* ---- reveal ---- */
+  .rv{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  .rv.in{opacity:1;transform:none}
+  .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
+  .rv.d4{transition-delay:.32s}.rv.d5{transition-delay:.40s}
+
+  /* ---- HERO ---- */
+  .hero{background:var(--ink);color:var(--white);min-height:100vh;display:flex;align-items:center;
+    position:relative;padding:120px 0 80px}
+  .hero::after{content:"";position:absolute;left:40px;bottom:42px;width:34px;height:34px;
+    border-left:1px solid var(--g3);border-bottom:1px solid var(--g3);opacity:.5}
+  .hero .kicker{color:var(--g4);margin-bottom:30px}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.6rem);color:var(--white);max-width:16ch;margin-bottom:34px}
+  .hero h1 .dim{color:var(--g3)}
+  .hero p{font-size:clamp(1rem,1.6vw,1.28rem);color:var(--g4);font-weight:200;max-width:54ch;margin-bottom:44px;line-height:1.55}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .scrollhint{color:var(--g3);font-size:.78rem;letter-spacing:.1em;text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-weight:400}
+  .scrollhint:hover{color:var(--g4)}
+
+  /* ---- SECTION SHELL ---- */
+  section{padding:110px 0}
+  .sec-kicker{margin-bottom:22px}
+  .sec-h{font-size:clamp(1.7rem,3.4vw,2.7rem);max-width:20ch;margin-bottom:18px;color:var(--ink)}
+  .sec-h .dim{color:var(--g2)}
+  .lead{font-size:1.08rem;color:var(--g2);max-width:60ch;font-weight:300}
+
+  /* problem */
+  .problem{background:var(--white)}
+  .prob-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;border-top:1px solid var(--g5)}
+  .prob-cell{padding:30px 26px 30px 0;border-right:1px solid var(--g5)}
+  .prob-cell:last-child{border-right:none}
+  .prob-cell .big{font-weight:400;font-size:1.06rem;color:var(--ink);margin-bottom:10px}
+  .prob-cell p{font-size:.9rem;color:var(--g2);font-weight:300;line-height:1.5}
+  @media(max-width:860px){.prob-grid{grid-template-columns:1fr 1fr}.prob-cell{border-right:none;border-bottom:1px solid var(--g5);padding-right:0}}
+
+  /* turn (dark band) */
+  .turn{background:var(--ink);color:var(--white)}
+  .turn .sec-kicker{color:var(--g3)}
+  .turn .sec-h{color:var(--white)}
+  .turn .sec-h .dim{color:var(--g4)}
+  .turn .lead{color:var(--g4);margin-top:20px}
+  .turn-line{width:100%;height:1px;background:var(--g1);margin:48px 0}
+  .turn-points{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+  .turn-points .tp .reg{color:var(--white);font-size:1.05rem;margin-bottom:8px;display:block}
+  .turn-points .tp p{color:var(--g4);font-size:.92rem;font-weight:300}
+
+  /* metrics band (dark) */
+  .metrics{background:#000;color:var(--white);padding:96px 0}
+  .metrics .sec-kicker{color:var(--g3);text-align:center;display:block;margin-bottom:50px}
+  .met-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
+  .met h3{font-size:clamp(2.1rem,4.2vw,3.1rem);font-weight:200;color:var(--white);letter-spacing:-0.02em;white-space:nowrap}
+  .met h3 .arrow{color:var(--g3);font-weight:200}
+  .met h3 .to{font-weight:500}
+  .met .lbl{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--g4);margin-top:14px;font-weight:400}
+  .met .line{width:30px;height:2px;background:var(--g2);margin-top:18px}
+  .metrics .note{text-align:center;color:var(--g3);font-size:.86rem;margin-top:54px;font-weight:300;font-style:italic}
+  @media(max-width:860px){.met-grid{grid-template-columns:1fr 1fr;gap:44px 30px}}
+
+  /* cycle */
+  .cycle{background:var(--gbg)}
+  .cyc-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:56px;align-items:stretch}
+  .cyc{background:var(--white);border:1px solid var(--g4);padding:26px 20px;position:relative}
+  .cyc.dark{background:var(--ink);border-color:var(--ink)}
+  .cyc .num{font-size:.74rem;color:var(--g4);font-weight:400;letter-spacing:.1em}
+  .cyc.dark .num{color:var(--g3)}
+  .cyc .nm{font-weight:500;font-size:1.12rem;color:var(--ink);margin:12px 0 10px}
+  .cyc.dark .nm{color:var(--white)}
+  .cyc p{font-size:.82rem;color:var(--g2);font-weight:300;line-height:1.45}
+  .cyc.dark p{color:var(--g4)}
+  .cyc .ar{position:absolute;right:-11px;top:50%;transform:translateY(-50%);z-index:2;color:var(--g3);font-size:1rem;background:var(--gbg);padding:2px}
+  @media(max-width:860px){.cyc-row{grid-template-columns:1fr 1fr}.cyc .ar{display:none}}
+
+  /* workflows */
+  .flows{background:var(--white)}
+  .flow-list{margin-top:50px;border-top:1px solid var(--g5)}
+  .flow{display:grid;grid-template-columns:60px 1fr auto;gap:24px;align-items:center;
+    padding:22px 0;border-bottom:1px solid var(--g5);transition:padding-left .35s var(--ease)}
+  .flow:hover{padding-left:14px}
+  .flow .fn{font-size:1.3rem;font-weight:200;color:var(--g4)}
+  .flow .fnm{font-size:1.08rem;font-weight:400;color:var(--ink)}
+  .flow .fm{font-size:.86rem;color:var(--g2);font-weight:300;text-align:right}
+  @media(max-width:680px){.flow{grid-template-columns:44px 1fr}.flow .fm{display:none}}
+
+  /* why (gray) */
+  .why{background:var(--gbg)}
+  .why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin-top:50px;border-top:1px solid var(--g4)}
+  .why-cell{padding:32px 40px 32px 0;border-bottom:1px solid var(--g4)}
+  .why-cell:nth-child(odd){border-right:1px solid var(--g4);padding-right:40px}
+  .why-cell:nth-child(even){padding-left:40px}
+  .why-cell .wh{font-weight:500;font-size:1.12rem;color:var(--ink);margin-bottom:10px}
+  .why-cell p{font-size:.92rem;color:var(--g2);font-weight:300}
+  @media(max-width:680px){.why-grid{grid-template-columns:1fr}.why-cell{border-right:none!important;padding:26px 0!important}}
+
+  /* who */
+  .who{background:var(--white)}
+  .who .lead{font-size:1.32rem;color:var(--ink);font-weight:300;max-width:30ch;line-height:1.4}
+  .who-sig{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px}
+  .chip{border:1px solid var(--g4);padding:9px 18px;font-size:.86rem;color:var(--g2);font-weight:300}
+
+  /* CTA (dark) */
+  .cta{background:var(--ink);color:var(--white)}
+  .cta .sec-h{color:var(--white)}
+  .cta .sec-h .dim{color:var(--g4)}
+  .cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:40px;align-items:start}
+  .cta-list{list-style:none;margin-top:8px}
+  .cta-list li{padding:16px 0;border-bottom:1px solid var(--g1);color:var(--g4);font-size:.98rem;font-weight:300}
+  .cta-list li:first-child{border-top:1px solid var(--g1)}
+  /* form */
+  .form-card{background:#141414;padding:38px;border:1px solid var(--g1)}
+  .form-card .fk{color:var(--g3);margin-bottom:22px;display:block}
+  .field{margin-bottom:18px}
+  .field label{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g3);margin-bottom:8px;font-weight:400}
+  .field input,.field textarea{width:100%;background:transparent;border:none;border-bottom:1px solid var(--g2);
+    color:var(--white);font-family:inherit;font-size:.98rem;font-weight:300;padding:8px 0;transition:border-color .3s}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--white)}
+  .field textarea{resize:vertical;min-height:64px}
+  .form-card .btn{width:100%;margin-top:8px;text-align:center;background:var(--white);color:var(--ink);border-color:var(--white)}
+  .form-card .btn:hover{background:transparent;color:var(--white)}
+  .form-msg{color:var(--g4);font-size:.86rem;margin-top:16px;display:none}
+  .nolock{color:var(--g3);font-size:.86rem;font-style:italic;margin-top:28px}
+  @media(max-width:760px){.cta-grid{grid-template-columns:1fr;gap:40px}}
+
+  /* about */
+  .about{background:var(--white)}
+  .about .lead{max-width:64ch}
+  .about .nm{font-weight:400;color:var(--ink)}
+
+  /* footer */
+  footer{background:#000;color:var(--g3);padding:54px 0 40px}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+  .foot .logo{color:var(--white);font-size:1.1rem}
+  .foot a{color:var(--g3);text-decoration:none;font-size:.86rem;transition:color .25s}
+  .foot a:hover{color:var(--white)}
+  .foot .desc{font-size:.78rem;color:var(--g3);max-width:40ch;font-weight:300;line-height:1.5}
+  .foot-bottom{border-top:1px solid var(--g1);margin-top:36px;padding-top:22px;font-size:.74rem;color:var(--g2);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="navin">
+    <div class="logo">data<span>cquity</span></div>
+    <div class="navlinks">
+      <a href="#how">How it works</a>
+      <a href="#os">The OS</a>
+      <a href="#why">Approach</a>
+      <a href="#contact" class="btn nav-cta">Request a readiness assessment</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker rv">The pharma commercial AI-powered OS</div>
+    <h1 class="rv d1">Platforms don't deliver results. <span class="dim">Disciplined process does.</span></h1>
+    <p class="rv d2">Standardized, AI-powered workflows and playbooks that run on the technology you already own — and deliver metrics you can measure. Proven process, ready to deploy, in a fraction of the time and cost of a custom consulting build.</p>
+    <div class="hero-cta rv d3">
+      <a href="#contact" class="btn btn-ghost">Request a readiness assessment</a>
+      <a href="#problem" class="scrollhint">See how it works ↓</a>
+    </div>
+  </div>
+</header>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="wrap">
+    <span class="kicker sec-kicker rv">The problem</span>
+    <h2 class="sec-h rv d1">Big-pharma complexity. <span class="dim">Lean resources. A clock that never stops.</span></h2>
+    <p class="lead rv d2">Mid-size pharma carries the same commercial complexity as the largest players — on a fraction of the resources, and against a finite patent window. The instinct is to buy another platform. But the platform was never the problem.</p>
+    <div class="prob-grid">
+      <div class="prob-cell rv d2"><div class="big">Complexity</div><p>The same field force, HCPs, and compliance bar — run by a lean team without an eight-figure budget.</p></div>
+      <div class="prob-cell rv d3"><div class="big">Precision</div><p>Specialty and rare-disease portfolios make every interaction matter more, not less.</p></div>
+      <div class="prob-cell rv d4"><div class="big">The mandate</div><p>Leadership wants an AI answer — without a playbook for how operations run on it.</p></div>
+      <div class="prob-cell rv d5"><div class="big">The clock</div><p>Every month standing up operations is patent-protected time you don't get back.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TURN -->
+<section class="turn">
+  <div class="wrap">
+    <span class="kicker sec-kicker rv">The alternative</span>
+    <h2 class="sec-h rv d1">Keep your technology. <span class="dim">Import the process. Deliver the metrics.</span></h2>
+    <p class="lead rv d2">A consulting firm rebuilds your processes from scratch, has you buy new platforms, and delivers in two to three years. We do it the other way around — the proven process, already built, running on what you own.</p>
+    <div class="turn-line rv d2"></div>
+    <div class="turn-points">
+      <div class="tp rv d2"><span class="reg">Keep your technology</span><p>No platform replacement, no expensive customization. We bind what you already own.</p></div>
+      <div class="tp rv d3"><span class="reg">Import the process</span><p>Ready-to-deploy workflows, AI workflows, and playbooks — proven, not re-invented.</p></div>
+      <div class="tp rv d4"><span class="reg">Deliver the metrics</span><p>Built around the numbers that move — measured honestly, from day one.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="metrics" id="outcomes">
+  <div class="wrap">
+    <span class="kicker sec-kicker rv">What it delivers</span>
+    <div class="met-grid">
+      <div class="met rv d1"><h3>45<span class="arrow"> → </span><span class="to">3</span></h3><div class="lbl">Min · pre-call prep</div><div class="line"></div></div>
+      <div class="met rv d2"><h3>40<span class="arrow"> → </span><span class="to">90%</span></h3><div class="lbl">Follow-up completion</div><div class="line"></div></div>
+      <div class="met rv d3"><h3>15<span class="arrow"> → </span><span class="to">3</span></h3><div class="lbl">Min · CRM entry</div><div class="line"></div></div>
+      <div class="met rv d4"><h3>15<span class="arrow"> → </span><span class="to">100%</span></h3><div class="lbl">Coaching coverage</div><div class="line"></div></div>
+    </div>
+    <p class="note rv d4">Illustrative targets, grounded in the workflow design. Your real baseline and timeframe are established up front — by audit, not assumption.</p>
+  </div>
+</section>
+
+<!-- CYCLE -->
+<section class="cycle" id="how">
+  <div class="wrap">
+    <span class="kicker sec-kicker rv">How it works</span>
+    <h2 class="sec-h rv d1">A disciplined cycle, <span class="dim">not a one-off project.</span></h2>
+    <p class="lead rv d2">Every engagement runs the same rigorous loop. Each turn raises the baseline.</p>
+    <div class="cyc-row">
+      <div class="cyc rv d1"><div class="num">01</div><div class="nm">Audit</div><p>Establish readiness and the real starting point.</p><span class="ar">→</span></div>
+      <div class="cyc rv d2"><div class="num">02</div><div class="nm">Baseline</div><p>Measure the true metrics, honestly.</p><span class="ar">→</span></div>
+      <div class="cyc rv d3"><div class="num">03</div><div class="nm">Deploy</div><p>Stand up the priority workflows.</p><span class="ar">→</span></div>
+      <div class="cyc dark rv d4"><div class="num">04</div><div class="nm">Metrics</div><p>Deliver the headline outcomes.</p><span class="ar">→</span></div>
+      <div class="cyc rv d5"><div class="num">05</div><div class="nm">Improve</div><p>Refine continuously.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOWS -->
+<section class="flows" id="os">
+  <div class="wrap">
+    <span class="kicker sec-kicker rv">The operating system</span>
+    <h2 class="sec-h rv d1">Six workflows. <span class="dim">The full rhythm of the commercial day.</span></h2>
+    <div class="flow-list">
+      <div class="flow rv d1"><div class="fn">01</div><div class="fnm">Territory Design & Field Force Planning</div><div class="fm">Optimized coverage</div></div>
+      <div class="flow rv d1"><div class="fn">02</div><div class="fnm">HCP Targeting & Segmentation</div><div class="fm">The right HCPs, refreshed</div></div>
+      <div class="flow rv d2"><div class="fn">03</div><div class="fnm">Pre-Call Planning & Call Execution</div><div class="fm">45 → 3 min prep</div></div>
+      <div class="flow rv d2"><div class="fn">04</div><div class="fnm">Call Reporting & CRM Data Capture</div><div class="fm">15 → 3 min entry</div></div>
+      <div class="flow rv d3"><div class="fn">05</div><div class="fnm">Omnichannel HCP Engagement</div><div class="fm">Coordinated across channels</div></div>
+      <div class="flow rv d3"><div class="fn">06</div><div class="fnm">MSL Engagement · Medical Affairs</div><div class="fm">Insights in real time</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="wrap">
+    <span class="kicker sec-kicker rv">Why Datacquity</span>
+    <h2 class="sec-h rv d1">A different model — <span class="dim">not cheaper consulting, not more software.</span></h2>
+    <div class="why-grid">
+      <div class="why-cell rv d1"><div class="wh">Productized, not bespoke</div><p>Proven patterns and templates, deployed in a fraction of custom-build time and cost.</p></div>
+      <div class="why-cell rv d2"><div class="wh">Process, not platform</div><p>Aimed at what actually delivers results: rigorous execution and continuous improvement.</p></div>
+      <div class="why-cell rv d3"><div class="wh">Technology-agnostic</div><p>Runs on what you already own. No replacement, no expensive customization, no lock-in.</p></div>
+      <div class="why-cell rv d4"><div class="wh">Pharma-specific</div><p>MLR-aware, compliance-grade, the field and medical reality built in.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="who">
+  <div class="wrap">
+    <span class="kicker sec-kicker rv">Who it's for</span>
+    <p class="lead rv d1">Built for mid-size and specialty pharma.</p>
+    <div class="who-sig">
+      <span class="chip rv d1">Overlooked by the big firms</span>
+      <span class="chip rv d2">Running your own operations</span>
+      <span class="chip rv d2">Wanting the best technology</span>
+      <span class="chip rv d3">Not yet bringing this rigor in-house</span>
+    </div>
+    <p class="lead rv d3" style="font-size:1rem;color:var(--g2);margin-top:34px;max-width:62ch;">A commercial-stage portfolio, a field force and/or MSL team to run, existing commercial technology to leverage, and real commercial complexity. If that's you, the conversation is worth your time.</p>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <span class="kicker sec-kicker rv">The next step</span>
+    <h2 class="sec-h rv d1">Start where the risk is lowest <span class="dim">and the clarity is highest.</span></h2>
+    <div class="cta-grid">
+      <div class="rv d2">
+        <p class="lead" style="color:var(--g4)">A Commercial Operations AI-Readiness Assessment tells you:</p>
+        <ul class="cta-list">
+          <li>Where your operation is genuinely ready for AI — and where it isn't</li>
+          <li>Your real baselines on the metrics that matter</li>
+          <li>Which workflow delivers the fastest, highest-value win</li>
+          <li>A realistic roadmap — built on your data, not our assumptions</li>
+        </ul>
+        <p class="nolock">However you choose to work with us, there's no lock-in. You own your operations.</p>
+      </div>
+      <div class="form-card rv d3">
+        <span class="kicker fk">Request your assessment</span>
+        <form id="contactForm" onsubmit="return handleSubmit(event)">
+          <div class="field"><label>Name</label><input type="text" name="name" required></div>
+          <div class="field"><label>Company</label><input type="text" name="company" required></div>
+          <div class="field"><label>Work email</label><input type="email" name="email" required></div>
+          <div class="field"><label>What would you like to improve?</label><textarea name="message" rows="2"></textarea></div>
+          <button type="submit" class="btn">Request a readiness assessment</button>
+          <p class="form-msg" id="formMsg">Thank you — we'll be in touch shortly to scope your assessment.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="wrap">
+    <span class="kicker sec-kicker rv">Who we are</span>
+    <p class="lead rv d1">Datacquity sits where the gap is — <span class="nm">deep pharma commercial-operations understanding, combined with genuine data and AI capability.</span> Most who know pharma don't know AI; most who know AI don't know pharma. We built this operating system at that intersection — credible to your commercial lead, your IT lead, and your compliance officer alike.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="logo">data<span style="color:var(--g3)">cquity</span></div>
+      <p class="desc">The pharma commercial AI-powered OS. Proven process, on the technology you already own.</p>
+      <a href="#contact">hello@datacquity.com</a>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> Datacquity. All rights reserved.</span>
+      <span>By appointment · Confidential</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // scroll reveal
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.14, rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  // hide nav on scroll down, show on up
+  let lastY=0; const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>{
+    const y=window.scrollY;
+    if(y>lastY && y>140){ nav.classList.add('hide'); } else { nav.classList.remove('hide'); }
+    lastY=y;
+  });
+
+  // form (front-end stub — wire to a backend / form service before launch)
+  function handleSubmit(e){
+    e.preventDefault();
+    const f=e.target;
+    if(!f.checkValidity()) return false;
+    f.querySelectorAll('input,textarea,button').forEach(el=>el.style.display='none');
+    f.querySelector('.fk');
+    document.getElementById('formMsg').style.display='block';
+    return false;
+  }
+</script>
+</body>
+</html>
